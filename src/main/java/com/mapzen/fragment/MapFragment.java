@@ -253,6 +253,7 @@ public class MapFragment extends BaseFragment {
             locationMarkerLayer.removeAllItems();
             locationMarkerLayer.addItem(getUserLocationMarker());
         }
+        updateMap();
     }
 
     public MarkerSymbol getHighlightMarkerSymbol() {
@@ -340,6 +341,7 @@ public class MapFragment extends BaseFragment {
 
         @Override
         public void onReceive(Context context, Intent intent) {
+            getMapController().setLocation(location);
             addLocationDot();
         }
     }
