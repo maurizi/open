@@ -3,7 +3,9 @@ package com.mapzen.fragment;
 import com.mapzen.R;
 import com.mapzen.entity.SimpleFeature;
 import com.mapzen.search.OnPoiClickListener;
+import com.mapzen.util.DatabaseHelper;
 import com.mapzen.util.IntentReceiver;
+import com.mapzen.util.Logger;
 import com.mapzen.util.MapzenTheme;
 import com.mapzen.util.PoiLayer;
 
@@ -24,6 +26,7 @@ import org.oscim.theme.ThemeLoader;
 import org.oscim.tiling.source.OkHttpEngine;
 import org.oscim.tiling.source.oscimap4.OSciMap4TileSource;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -41,6 +44,17 @@ import static com.mapzen.MapController.DEFAULT_ZOOMLEVEL;
 import static com.mapzen.MapController.getMapController;
 import static com.mapzen.activity.BaseActivity.COM_MAPZEN_UPDATES_LOCATION;
 import static com.mapzen.core.MapzenLocation.COM_MAPZEN_FIND_ME;
+import static com.mapzen.util.DatabaseHelper.COLUMN_ACC;
+import static com.mapzen.util.DatabaseHelper.COLUMN_ALT;
+import static com.mapzen.util.DatabaseHelper.COLUMN_BEARING;
+import static com.mapzen.util.DatabaseHelper.COLUMN_DUMP;
+import static com.mapzen.util.DatabaseHelper.COLUMN_LAT;
+import static com.mapzen.util.DatabaseHelper.COLUMN_LNG;
+import static com.mapzen.util.DatabaseHelper.COLUMN_PROVIDER;
+import static com.mapzen.util.DatabaseHelper.COLUMN_ROUTE_ID;
+import static com.mapzen.util.DatabaseHelper.COLUMN_SPEED;
+import static com.mapzen.util.DatabaseHelper.COLUMN_TIME;
+import static com.mapzen.util.DatabaseHelper.TABLE_LOCATIONS;
 import static org.oscim.layers.marker.ItemizedLayer.OnItemGestureListener;
 
 public class MapFragment extends BaseFragment {
@@ -341,8 +355,26 @@ public class MapFragment extends BaseFragment {
 
         @Override
         public void onReceive(Context context, Intent intent) {
+            Bundle bundle = intent.getExtras();
+            Location location = bundle.getParcelable("location");
+            storeLocation(location);
             getMapController().setLocation(location);
             addLocationDot();
         }
+    }
+
+    private void storeLocation(Location location) {
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_PROVIDER, location.getProvider());
+        values.put(COLUMN_LAT, location.getLatitude());
+        values.put(COLUMN_LNG, location.getLongitude());
+        values.put(COLUMN_DUMP, location.toString());
+        values.put(COLUMN_ALT, location.getAltitude());
+        values.put(COLUMN_ACC, location.getAccuracy());
+        values.put(COLUMN_TIME, System.currentTimeMillis());
+        values.put(COLUMN_SPEED, location.getSpeed());
+        values.put(COLUMN_BEARING, location.getBearing());
+        values.put(COLUMN_ROUTE_ID, "routeless");
+        act.getDb().insert(TABLE_LOCATIONS, null, values);
     }
 }

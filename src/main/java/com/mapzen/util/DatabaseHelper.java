@@ -24,6 +24,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_ACC = "acc";
     public static final String COLUMN_TIME = "time";
     public static final String COLUMN_SPEED = "speed";
+    public static final String COLUMN_BEARING = "bearing";
     public static final String COLUMN_DUMP = "dump";
     public static final String DB_NAME = "locations.db";
     public static final String TABLE_LOCATIONS = "locations";
@@ -38,7 +39,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_TABLE_ID = "_id";
     public static final String COLUMN_UPLOADED = "uploaded";
     public static final String COLUMN_READY_FOR_UPLOAD = "ready_for_upload";
-    public static final int VERSION = 9;
+    public static final int VERSION = 10;
 
     private final String createLocationsSql = "create table " + TABLE_LOCATIONS + " ("
             + COLUMN_TABLE_ID + " text primary key,"
@@ -55,6 +56,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + COLUMN_TIME + " numeric not null,"
             + COLUMN_ROUTE_ID + " text not null,"
             + COLUMN_SPEED + " numeric not null,"
+            + COLUMN_BEARING + " numeric not null,"
             + COLUMN_DUMP + " text not null)";
 
     private final String createRoutesSql = "create table " + TABLE_ROUTES + " ("
