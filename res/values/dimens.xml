@@ -41,4 +41,5 @@
     <dimen name="big">32sp</dimen>
     <dimen name="medium">21sp</dimen>
     <dimen name="small">15sp</dimen>
+    <dimen name="tiny">9sp</dimen>
 </resources>
