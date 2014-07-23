@@ -1,7 +1,7 @@
 machine:
   pre:
     - curl -O http://apache.osuosl.org/maven/maven-3/3.1.1/binaries/apache-maven-3.1.1-bin.tar.gz && tar xvf apache-maven-3.1.1-bin.tar.gz -C ~/.m2
-    - sudo apt-get install -qq libstdc++6:i386 lib32z1
+    - apt-get install -qq libstdc++6:i386 lib32z1
   environment:
     PATH: $HOME/.m2/apache-maven-3.1.1/bin:$PATH
     M2_HOME: $HOME/.m2/apache-maven-3.1.1/
