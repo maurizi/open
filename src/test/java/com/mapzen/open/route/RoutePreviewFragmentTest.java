@@ -19,7 +19,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.oscim.layers.PathLayer;
 import org.oscim.layers.marker.ItemizedLayer;
@@ -191,7 +190,7 @@ public class RoutePreviewFragmentTest {
     public void createRouteToDestination_shouldGetCurrentLocationFirst() throws Exception {
         mapController.setLocation(getTestLocation(22.22, 44.44));
         fragment.createRouteToDestination();
-        verify(router, Mockito.times(2)).setLocation(location.capture());
+        verify(router, times(2)).setLocation(location.capture());
         List<double[]> values = location.getAllValues();
         assertThat(values.get(0)).isEqualTo(new double[] { 22.22, 44.44 });
         assertThat(values.get(1)).isEqualTo(new double[] { 1.0, 1.0 });
